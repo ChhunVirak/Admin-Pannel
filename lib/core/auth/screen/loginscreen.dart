@@ -10,7 +10,7 @@ import 'package:z1web_adminpanel/setting/color/app_color.dart';
 import 'package:z1web_adminpanel/util/helper/custom_button.dart';
 import 'package:z1web_adminpanel/util/helper/custom_textformfield.dart';
 
-import '../../../router/router.gr.dart';
+import '../../../config/router/router.gr.dart';
 
 class LoginScreen extends StatefulWidget {
   final String? message;
@@ -211,6 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             }, onWrong: () {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
+                                  behavior: SnackBarBehavior.floating,
                                   backgroundColor: AppColor.primarySwatch,
                                   content: const Text(
                                       'Invalid Username or Password! Please try again.'),

@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
-import 'package:z1web_adminpanel/module/home/model/app_model.dart';
+import 'package:z1web_adminpanel/module/dashboard/model/app_model.dart';
 import 'package:z1web_adminpanel/util/function/local_storage.dart';
 
 class LoginController extends GetxController {
@@ -13,7 +12,6 @@ class LoginController extends GetxController {
   final password = ''.obs;
 
   final isLoadingLogin = false.obs;
-  FToast fToast = FToast();
 
   checkUser({ValueChanged<String>? onsuccess, Function? onWrong}) {
     isLoadingLogin(true);
@@ -53,13 +51,12 @@ class LoginController extends GetxController {
   }
 
   final listApp = <AppModel>[].obs;
-  getApplist() {
+  Future<void> getApplist() async {
     listApp.clear();
-    FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('allapplist')
         .doc("PzFIM1vAROeDI5RBHzIB")
         .collection('applist')
-        .orderBy('appname')
         .get()
         .then((value) {
       value.docs.map(
@@ -70,7 +67,7 @@ class LoginController extends GetxController {
         },
       ).toList();
     }).onError((error, stackTrace) {
-      debugPrint("#####_-------> ${error.toString()}");
+      debugPrint("ERROR -------> ${error.toString()}");
     });
   }
 
@@ -115,7 +112,7 @@ class LoginController extends GetxController {
   }
 
   Future addapp() async {
-    var itemadd = AppModel(
+    AppModel itemadd = AppModel(
         appname: appname.value,
         applink: appurl.value,
         description: description.value,

@@ -2,19 +2,20 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_strategy/url_strategy.dart';
-import 'package:z1web_adminpanel/router/router.gr.dart';
+import 'package:z1web_adminpanel/config/router/router.gr.dart';
 import 'package:z1web_adminpanel/setting/color/app_color.dart';
 import 'package:z1web_adminpanel/util/function/local_storage.dart';
 
 import 'firebase_options.dart';
 
 Future<void> main() async {
+  setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   await LocalStorage.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  setPathUrlStrategy();
+
   runApp(MyApp());
 }
 
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp.router(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerDelegate: _appRouter.delegate(),
       routeInformationParser: _appRouter.defaultRouteParser(),

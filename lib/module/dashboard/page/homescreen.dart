@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,7 +9,7 @@ import 'package:z1web_adminpanel/setting/color/app_color.dart';
 import 'package:z1web_adminpanel/util/function/local_storage.dart';
 import 'package:z1web_adminpanel/util/helper/custom_button.dart';
 import 'package:z1web_adminpanel/util/helper/custom_textformfield.dart';
-import '../../../router/router.gr.dart';
+import '../../../config/router/router.gr.dart';
 import '../../../util/helper/custom_dropdown.dart';
 import '../../../widget/app_widget/custom_appcard.dart';
 
@@ -51,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    checklogin();
+    // checklogin();
     super.initState();
   }
 
@@ -60,16 +58,16 @@ class _HomeScreenState extends State<HomeScreen> {
     double scrwidth = MediaQuery.of(context).size.width;
     showOption = scrwidth > 950;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[300],
       body: Stack(
         children: [
           Row(
             children: [
               Container(
                 width: 130,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  border: const Border(
                     right: BorderSide(color: Colors.black12),
                   ),
                 ),
@@ -120,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Column(
@@ -197,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.grey[300],
                         borderRadius: BorderRadius.circular(30),
                       ),
                       width: double.infinity,
@@ -212,8 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: controller.listApp.map(
                               (e) {
                                 return AppCard(
-                                  color: Color(Random().nextInt(0xff00000))
-                                      .withAlpha(0xff),
+                                  color: Colors.grey[300],
                                   showDelete: showDelete, desc: e.description,
                                   onPressed: () {
                                     showDialog(
@@ -258,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             dataSource: <ChartSampleData>[
                                               ChartSampleData(
                                                   x: 'A',
-                                                  y: 62,
+                                                  y: e.proccess!.toInt(),
                                                   pointColor:
                                                       const Color.fromRGBO(
                                                           0, 220, 252, 1)),
@@ -266,10 +263,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                             animationDuration: 1000,
                                             xValueMapper:
                                                 (ChartSampleData data, _) =>
-                                                    data.x as String,
+                                                    e.proccess.toString(),
                                             yValueMapper:
                                                 (ChartSampleData data, _) =>
-                                                    data.y,
+                                                    e.proccess,
                                             pointColorMapper:
                                                 (ChartSampleData data, _) =>
                                                     data.pointColor)

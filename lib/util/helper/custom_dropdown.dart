@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class CustomDropDown extends StatefulWidget {
@@ -48,28 +50,31 @@ class _CustomDropDownState extends State<CustomDropDown> {
                     left: positionval.localToGlobal(Offset.zero).dx,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Container(
-                        width: 150,
-                        height: 250,
-                        // padding: const EdgeInsets.all(15),
-                        decoration: const BoxDecoration(
-                          color: Colors.yellow,
-                        ),
-                        child: ListView.separated(
-                          separatorBuilder: (context, index) =>
-                              const Divider(height: 0),
-                          itemCount: widget.listFilter.length,
-                          itemBuilder: (context, index) => ListTile(
-                              onTap: () {
-                                if (widget.onChnaged != null) {
-                                  widget.onChnaged!(widget.listFilter[index]);
-                                }
-                                data = widget.listFilter[index];
-                                overlayEntry!.remove();
-                                onCancel();
-                                setState(() {});
-                              },
-                              title: Text(widget.listFilter[index])),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                        child: Container(
+                          width: 150,
+                          height: 250,
+                          // padding: const EdgeInsets.all(15),
+                          decoration: const BoxDecoration(
+                            color: Colors.white10,
+                          ),
+                          child: ListView.separated(
+                            separatorBuilder: (context, index) =>
+                                const Divider(height: 0),
+                            itemCount: widget.listFilter.length,
+                            itemBuilder: (context, index) => ListTile(
+                                onTap: () {
+                                  if (widget.onChnaged != null) {
+                                    widget.onChnaged!(widget.listFilter[index]);
+                                  }
+                                  data = widget.listFilter[index];
+                                  overlayEntry!.remove();
+                                  onCancel();
+                                  setState(() {});
+                                },
+                                title: Text(widget.listFilter[index])),
+                          ),
                         ),
                       ),
                     ),
@@ -86,32 +91,39 @@ class _CustomDropDownState extends State<CustomDropDown> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        showdrop = !showdrop;
-        if (showdrop) {
-          showOverlay(context, getBoxKey, 0, () {
-            debugPrint('Cancel');
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Material(
+        borderRadius: BorderRadius.circular(10),
+        child: InkWell(
+          onTap: () {
             showdrop = !showdrop;
+            if (showdrop) {
+              showOverlay(context, getBoxKey, 0, () {
+                debugPrint('Cancel');
+                showdrop = !showdrop;
+                setState(() {});
+              });
+            }
             setState(() {});
-          });
-        }
-        setState(() {});
-      },
-      child: Container(
-        key: getBoxKey,
-        // height: 30,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        decoration: BoxDecoration(
-            color: Colors.grey[100], borderRadius: BorderRadius.circular(10)),
-        child: Row(
-          children: [
-            Text(data),
-            const Spacer(),
-            !showdrop
-                ? const Icon(Icons.keyboard_arrow_down_rounded)
-                : const Icon(Icons.keyboard_arrow_up_rounded)
-          ],
+          },
+          child: Container(
+            key: getBoxKey,
+            // height: 30,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            decoration: BoxDecoration(
+                color: Colors.grey[100],
+                borderRadius: BorderRadius.circular(10)),
+            child: Row(
+              children: [
+                Text(data),
+                const Spacer(),
+                !showdrop
+                    ? const Icon(Icons.keyboard_arrow_down_rounded)
+                    : const Icon(Icons.keyboard_arrow_up_rounded)
+              ],
+            ),
+          ),
         ),
       ),
     );

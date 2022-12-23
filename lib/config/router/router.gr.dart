@@ -13,8 +13,8 @@
 import 'package:auto_route/auto_route.dart' as _i3;
 import 'package:flutter/material.dart' as _i4;
 
-import '../core/auth/screen/loginscreen.dart' as _i1;
-import '../module/home/screen/homescreen.dart' as _i2;
+import '../../core/auth/screen/loginscreen.dart' as _i1;
+import '../../module/dashboard/page/homescreen.dart' as _i2;
 
 class AppRouter extends _i3.RootStackRouter {
   AppRouter([_i4.GlobalKey<_i4.NavigatorState>? navigatorKey])
@@ -42,10 +42,8 @@ class AppRouter extends _i3.RootStackRouter {
 
   @override
   List<_i3.RouteConfig> get routes => [
-        _i3.RouteConfig('/#redirect',
-            path: '/', redirectTo: '/login', fullMatch: true),
         _i3.RouteConfig(LoginScreen.name, path: '/login'),
-        _i3.RouteConfig(HomeScreen.name, path: '/home-screen')
+        _i3.RouteConfig(HomeScreen.name, path: '/')
       ];
 }
 
@@ -75,7 +73,7 @@ class LoginScreenArgs {
 /// generated route for
 /// [_i2.HomeScreen]
 class HomeScreen extends _i3.PageRouteInfo<void> {
-  const HomeScreen() : super(HomeScreen.name, path: '/home-screen');
+  const HomeScreen() : super(HomeScreen.name, path: '/');
 
   static const String name = 'HomeScreen';
 }
